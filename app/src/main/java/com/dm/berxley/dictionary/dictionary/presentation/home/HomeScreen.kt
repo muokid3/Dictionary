@@ -22,11 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
 
-    val viewModel: HomeViewModel = viewModel()
+    val viewModel: HomeViewModel = koinViewModel()
     val state = viewModel.wordState.collectAsStateWithLifecycle().value
 
     LaunchedEffect(key1 = true) {

@@ -18,8 +18,8 @@ class WordRepositoryImpl(
     private val wordDao: WordDao
 ): WordRepository {
     override suspend fun getWordMeanings(word: String): Flow<Result<List<Word>, Error>> = flow {
-       val wordInfos = wordDao.getWordInfos(word).map { it.toWord() }
 
+        var wordInfos = wordDao.getWordInfos(word).map { it.toWord() }
         emit(Result.Success(wordInfos))
 
 
@@ -29,6 +29,9 @@ class WordRepositoryImpl(
 
             wordDao.deleteWords(remoteWords.map { it.word })
             wordDao.insertWords(remoteWords.map { it.toWordEntity() })
+
+            wordInfos = wordDao.getWordInfos(word).map { it.toWord() }
+            emit(Result.Success(wordInfos))
 
         }catch (e: HttpException){
             emit(Result.Error(NetworkError.SERVER_ERROR))
