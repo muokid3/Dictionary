@@ -1,7 +1,7 @@
 package com.dm.berxley.dictionary.di
 
 import androidx.room.Room
-import com.dm.berxley.dictionary.dictionary.data.local.ListToStringConverter
+import com.dm.berxley.dictionary.dictionary.data.local.Converters
 import com.dm.berxley.dictionary.dictionary.data.local.WordDatabase
 import com.dm.berxley.dictionary.dictionary.data.remote.WordApi
 import com.dm.berxley.dictionary.dictionary.data.repositories.WordRepositoryImpl
@@ -28,7 +28,7 @@ val AppModule = module {
             klass = WordDatabase::class.java,
             name = WordDatabase.ROOM_DB_NAME
         )
-            .addTypeConverter(ListToStringConverter::class)
+            .addTypeConverter(Converters::class)
             .fallbackToDestructiveMigration()
             .build()
     }

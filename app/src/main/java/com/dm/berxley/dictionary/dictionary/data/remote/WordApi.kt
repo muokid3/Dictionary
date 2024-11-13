@@ -11,7 +11,7 @@ interface WordApi {
 
     @Headers("Content-Type: application/json")
     @GET("{word}")
-    suspend fun getWordMeanings(@Path("word") word: String): Result<List<WordResponseDto>, NetworkError>
+    suspend fun getWordMeanings(@Path("word") word: String): List<WordResponseDto>
 
 
     companion object {
