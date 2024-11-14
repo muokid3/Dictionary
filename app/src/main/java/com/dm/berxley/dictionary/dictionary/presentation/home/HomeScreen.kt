@@ -52,8 +52,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                         when (event) {
                             is DictionaryEvent.ShowSnack -> {
                                 snackBarHostState.showSnackbar(
-                                    message = event.message,
-                                    actionLabel = "Ok"
+                                    message = event.message
                                 )
                             }
                         }
