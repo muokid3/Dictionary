@@ -1,11 +1,10 @@
 package com.dm.berxley.dictionary.dictionary.data.repositories
 
 import android.util.Log
+import com.dm.berxley.dictionary.core.domain.util.ApiErrorResponse
 import com.dm.berxley.dictionary.core.domain.util.Error
-import com.dm.berxley.dictionary.core.domain.util.NetworkError
 import com.dm.berxley.dictionary.core.domain.util.Result
 import com.dm.berxley.dictionary.dictionary.data.local.WordDao
-import com.dm.berxley.dictionary.core.domain.util.ApiErrorResponse
 import com.dm.berxley.dictionary.dictionary.data.remote.WordApi
 import com.dm.berxley.dictionary.dictionary.data.util.JsonParser
 import com.dm.berxley.dictionary.dictionary.domain.models.Word
@@ -46,7 +45,11 @@ class WordRepositoryImpl(
             emit(Result.Error(errorBodyResponse))
         } catch (e: IOException) {
             Log.e("ERRORIO:", e.message ?: "no message")
-            emit(Result.Error(NetworkError.NO_INTERNET))
+            val errorBodyResponse = ApiErrorResponse(
+                title = "Unable to reach server, ",
+                message = "Please check your internet connection and try again later."
+            )
+            emit(Result.Error(errorBodyResponse))
         }
 
     }

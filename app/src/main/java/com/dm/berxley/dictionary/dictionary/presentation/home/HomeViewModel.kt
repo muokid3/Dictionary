@@ -59,7 +59,14 @@ class HomeViewModel(
                             }
                             //emit error event here using channels
                             val errorMessage: ApiErrorResponse = result.error as ApiErrorResponse
-                            val msg = errorMessage.message + " " + errorMessage.resolution
+                            val msg =
+                                if (!errorMessage.title.isNullOrEmpty()) errorMessage.title else {
+                                    ""
+                                } + " " + if (!errorMessage.message.isNullOrEmpty()) errorMessage.message else {
+                                    ""
+                                } + " " + if (!errorMessage.resolution.isNullOrEmpty()) errorMessage.resolution else {
+                                    ""
+                                }
                             _dictionaryEventsChannel.send(DictionaryEvent.ShowSnack(message = msg))
                         }
 
