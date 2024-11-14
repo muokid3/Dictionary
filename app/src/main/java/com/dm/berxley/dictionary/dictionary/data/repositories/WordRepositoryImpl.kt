@@ -40,7 +40,7 @@ class WordRepositoryImpl(
         } catch (e: HttpException) {
 
             val errorBodyResponse = jsonParser.fromJson(
-                e.response()?.errorBody()?.string() ?: "",
+                e.response()?.errorBody()?.string() ?: "{}",
                 object : TypeToken<ApiErrorResponse>() {}.type
             ) ?: ApiErrorResponse()
             emit(Result.Error(errorBodyResponse))

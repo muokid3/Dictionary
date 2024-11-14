@@ -14,14 +14,21 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -29,12 +36,32 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
     val viewModel: HomeViewModel = koinViewModel()
     val state = viewModel.wordState.collectAsStateWithLifecycle().value
+    val snackBarHostState = remember { SnackbarHostState() }
+    val lifecycleOwner = LocalLifecycleOwner.current
 
-    LaunchedEffect(key1 = true) {
-        //collect one time events here. snackbar, etc
-    }
 
-    Scaffold { paddingValues ->
+    Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
+    ) { paddingValues ->
+
+        LaunchedEffect(lifecycleOwner) {
+            //collect one time events here. snackbar, etc
+            lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                withContext(Dispatchers.Main.immediate){
+                    viewModel.dictionaryEventsChannel.collect { event ->
+                        when (event) {
+                            is DictionaryEvent.ShowSnack -> {
+                                snackBarHostState.showSnackbar(
+                                    message = event.message,
+                                    actionLabel = "Ok"
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
 
         Box(
             modifier = Modifier
