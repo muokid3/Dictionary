@@ -7,7 +7,7 @@ import com.dm.berxley.dictionary.dictionary.data.local.entities.WordEntity
 
 @Database(
     entities = [WordEntity::class],
-    version = 1
+    version = 2
 )
 @TypeConverters(Converters::class)
 abstract class WordDatabase : RoomDatabase() {

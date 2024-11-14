@@ -5,7 +5,7 @@ import com.dm.berxley.dictionary.dictionary.domain.models.Word
 
 data class WordResponseDto(
     var word: String,
-    var phonetic: String,
+    var phonetic: String? = null,
     val meanings: List<MeaningDto>,
 ){
     fun toWordEntity(): WordEntity {

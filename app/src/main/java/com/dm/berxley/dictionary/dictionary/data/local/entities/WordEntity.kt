@@ -10,7 +10,7 @@ data class WordEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long? = null,
     val word: String,
-    val phonetic: String,
+    val phonetic: String? = null,
     val meanings: List<Meaning>,
 ){
     fun toWord(): Word{
