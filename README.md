@@ -1,11 +1,11 @@
 # Dictionary
 A simple offline-first dictionary app. Kotlin stack:
-> Jetpack Compose,
-> Clean architecture,
-> MVI,
-> DI with Koin,
-> Room for offline caching,
-> Retrofit for API calls
+> Jetpack Compose,<br>
+> Clean architecture,<br>
+> MVI Presentational Pattern,<br>
+> DI with Koin,<br>
+> Room for offline caching,<br>
+> Retrofit for API calls<br>
 
 Free dictionary API: https://dictionaryapi.dev/
 
